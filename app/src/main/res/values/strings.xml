@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Format Phone</string>
+    <string name="welcome">Welcome to our application \n \"format phone\"</string>
+    <string name="signUp">SignUP</string>
+    <string name="signUpText">SignUp to create account</string>
+    <string name="user_name">User name</string>
+    <string name="e_mail">Email</string>
+    <string name="phone_number">Phone number</string>
+    <string name="password">Password</string>
+    <string name="logIn">LogIn</string>
+    <string name="logInText">Login to you can delete your data phone</string>
+    <string name="format">Format Phone</string>
+    <string name="about">This application for android smart phone allow to you format all data which stored on your  phone when it stolen or lost remotely from another android smart phone.</string>
+    <string name="want">What are you want to do?</string>
+    <string name="formatbtn">Format Data phone</string>
+    <string name="getAphoto">Get a photo</string>
+    <string name="captureAphoto">Capture a photo</string>
+
+
+    <string name="device_admin">Device Admin</string>
+    <string name="device_admin_description">Device admin description</string>
+    <string name="compliant">Compliant</string>
+    <string name="not_compliant">Not compliant</string>
+</resources>

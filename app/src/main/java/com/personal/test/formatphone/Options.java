@@ -21,40 +21,40 @@ public class Options extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-/*
-        deletePhoto = (Button)findViewById(R.id.deletePhotobtn);
-        takePhoto = (Button)findViewById(R.id.takePhotobtn);
-//select picture from external storage
-        deletePhoto.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+//        deletePhoto = (Button)findViewById(R.id.deletePhotobtn);
+//        takePhoto = (Button)findViewById(R.id.takePhotobtn);
+////select picture from external storage
+//        deletePhoto.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                // choose picture from gallery
+//                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//
+//                startActivityForResult(intent,
+//                        REQUEST_CODE_EXTERNAL_IMAGE);
+//
+//            }
+//        });
+//
+//        //take picture from camera
+//        takePhoto.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                // start camera to take picture
+//                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, setImageUri());
+//                startActivityForResult(intent,
+//                        REQUEST_CODE_CAMERA_IMAGE);
+//
+//            }
+//        });
 
-                // choose picture from gallery
-                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                startActivityForResult(intent,
-                        REQUEST_CODE_EXTERNAL_IMAGE);
-
-            }
-        });
-
-        //take picture from camera
-        takePhoto.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                // start camera to take picture
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, setImageUri());
-                startActivityForResult(intent,
-                        REQUEST_CODE_CAMERA_IMAGE);
-
-            }
-        });
-
-*/
 
 
     }

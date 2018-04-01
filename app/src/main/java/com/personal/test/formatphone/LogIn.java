@@ -75,7 +75,11 @@ public class LogIn extends AppCompatActivity {
         // to do after input is valid
         String email = eMail.getText().toString();
         String pass = passWord.getText().toString();
+
+        //new Login().start(new Credentials(email, pass));
         String password = dataBase.verifyAccount(email);
+
+
         if (pass.equals(password)) {
             Intent gotoLoginActivity = new Intent(this, Options.class);
             startActivity(gotoLoginActivity);
@@ -84,13 +88,14 @@ public class LogIn extends AppCompatActivity {
             passWord.setText("");
             passWord.findFocus();
         }
+
     }
 
-    private class login implements Callback<Void> {
+    private class Login implements Callback<Token> {
 
         static final String BASE_URL = "http://fb.vsse.org";
 
-        public void start(User user) {
+        public void start(Credentials credentials) {
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -100,28 +105,34 @@ public class LogIn extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             RestClient restClient = retrofit.create(RestClient.class);
-            Call<Void> call = restClient.register(user);
+            Call<Token> call = restClient.login(credentials);
             call.enqueue(this);
         }
 
         @Override
-        public void onResponse(Call<Void> call, Response<Void> response) {
+        public void onResponse(Call<Token> call, Response<Token> response) {
             if(response.isSuccessful()) {
 //                User user = response.body();
 //                if(user!=null) {
-                Toast.makeText(context,"Registered Successfully",Toast.LENGTH_SHORT).show();
-                Intent gotoLoginActivity = new Intent(context,LogIn.class);
-                startActivity(gotoLoginActivity);
+
+                System.out.println("token"+ response.body().toString());
+                Toast.makeText(context,"login Successfully",Toast.LENGTH_SHORT).show();
+                Intent gotoOptionsActivity = new Intent(context,Options.class);
+                startActivity(gotoOptionsActivity);
                 // }
             } else {
                 System.out.println(response.errorBody());
-                Toast.makeText(context,"Error in registeration",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"error password please try again",Toast.LENGTH_SHORT).show();
+                passWord.setText("");
+                passWord.findFocus();
             }
         }
 
         @Override
-        public void onFailure(Call<Void> call, Throwable t) {
-            Toast.makeText(context,"Failed to Regsiter",Toast.LENGTH_SHORT).show();
+        public void onFailure(Call<Token> call, Throwable t) {
+            Toast.makeText(context,"error password please try again",Toast.LENGTH_SHORT).show();
+            passWord.setText("");
+            passWord.findFocus();
         }}
 
 

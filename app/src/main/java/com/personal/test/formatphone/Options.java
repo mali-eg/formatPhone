@@ -24,6 +24,68 @@ public class Options extends AppCompatActivity {
     static final int ACTIVATION_REQUEST = 1;
     DevicePolicyManager mDPM;
     ComponentName mDeviceAdmin;
+
+    private void DeleteRecursive(File dir) {
+        Toast.makeText(getApplicationContext(),"dir:" + dir,Toast.LENGTH_SHORT).show();
+        if ( dir.isDirectory() )
+        {
+            String [] children = dir.list();
+            System.out.println("children"+children);
+            //Toast.makeText(getApplicationContext(),"children\n" + children,Toast.LENGTH_SHORT).show();
+            for ( int i = 0 ; i < children.length ; i ++ )
+            {
+                File child =    new File( dir , children[i] );
+                if(child.isDirectory()){
+                    System.out.println("child:" + child +"is a directory");
+                    DeleteRecursive( child );
+                    child.delete();
+                }else{
+                    System.out.println("child:" + child +"is a file");
+                    child.delete();
+
+                }
+            }
+            dir.delete();
+        }else{
+            Toast.makeText(getApplicationContext(),dir + " is a file",Toast.LENGTH_SHORT).show();
+        }
+    }
+// Android storage https://developer.android.com/training/data-storage/files.html
+    private void deleteAll(){
+        File mediaDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+
+        File pictureDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+
+        File exFilesDir = getApplicationContext().getExternalFilesDir(
+                Environment.DIRECTORY_PICTURES);
+
+        File filesDir = getApplicationContext().getFilesDir();
+
+        File cacheDir = getApplicationContext().getCacheDir();
+
+        try{
+            DeleteRecursive(mediaDir);
+        }catch (Exception e){}
+
+        try{
+            DeleteRecursive(pictureDir);
+        }catch (Exception e){}
+
+        try{
+            DeleteRecursive(exFilesDir);
+        }catch (Exception e){}
+
+        try{
+            DeleteRecursive(filesDir);
+        }catch (Exception e){}
+
+        try{
+            DeleteRecursive(cacheDir);
+        }catch (Exception e){}
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,15 +101,27 @@ public class Options extends AppCompatActivity {
             public void onClick(View v) {
 
                 //TODO format
-                mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-                mDeviceAdmin = new ComponentName(Options.this,      WipeDataReceiver.class);
-//                mDeviceAdmin = new ComponentName();
-                Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-                intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceAdmin);
-                intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Formating phone!!");
-                startActivityForResult(intent, ACTIVATION_REQUEST);
-                //Toast.makeText(getApplicationContext(),"login Successfully",Toast.LENGTH_SHORT).show();
-                mDPM.wipeData(ACTIVATION_REQUEST);
+//                mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+//                mDeviceAdmin = new ComponentName(Options.this,      WipeDataReceiver.class);
+//  //              mDeviceAdmin = new ComponentName();
+//                Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+//                intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceAdmin);
+//                intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Formating phone!!");
+//                startActivityForResult(intent, ACTIVATION_REQUEST);
+// //               Toast.makeText(getApplicationContext(),"format Successfully",Toast.LENGTH_SHORT).show();
+//                mDPM.wipeData(ACTIVATION_REQUEST);
+                try {
+                    //String path = Environment.getExternalStorageDirectory().getPath();
+                    File path = getApplicationContext().getFilesDir();
+                    //DeleteRecursive(new File("/data"));
+                    //DeleteRecursive(path);
+                    deleteAll();
+                    Toast.makeText(getApplicationContext(),"format Successfully",Toast.LENGTH_SHORT).show();
+                }catch(Exception e){
+                    Toast.makeText(getApplicationContext(),"format error" +"\n" + e.getMessage(),Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
             }
         });
 //

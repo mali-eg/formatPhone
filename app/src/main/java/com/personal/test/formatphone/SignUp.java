@@ -78,7 +78,7 @@ public class SignUp extends AppCompatActivity {
         }
         if (password.isEmpty() || password.length()>8)
         {
-            passWord.setError("please set valid password");
+            passWord.setError("Passwords must have at least 8");
             valid = false;
         }
         return valid;

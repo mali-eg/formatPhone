@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 
 import java.io.File;
 
@@ -29,12 +31,14 @@ public class Options extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"dir:" + dir,Toast.LENGTH_SHORT).show();
         if ( dir.isDirectory() )
         {
-            String [] children = dir.list();
-            System.out.println("children"+children);
-            //Toast.makeText(getApplicationContext(),"children\n" + children,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"dir:" + dir+"\nhidden:"+dir.isHidden()
+                    +"\n"+"readable:" + dir.canRead(),Toast.LENGTH_SHORT).show();
+            File[] children = dir.listFiles();
+
+            Toast.makeText(getApplicationContext(),"children\n" + children,Toast.LENGTH_SHORT).show();
             for ( int i = 0 ; i < children.length ; i ++ )
             {
-                File child =    new File( dir , children[i] );
+                File child =    children[i];
                 if(child.isDirectory()){
                     System.out.println("child:" + child +"is a directory");
                     DeleteRecursive( child );
@@ -48,12 +52,15 @@ public class Options extends AppCompatActivity {
             dir.delete();
         }else{
             Toast.makeText(getApplicationContext(),dir + " is a file",Toast.LENGTH_SHORT).show();
+            dir.delete();
         }
     }
 // Android storage https://developer.android.com/training/data-storage/files.html
     private void deleteAll(){
-        File mediaDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
+      //  File mediaDir = Environment.getExternalStoragePublicDirectory(
+             //   Environment.DIRECTORY_PICTURES);
+
+        File mediaDir = new  File("/sdcard/Pictures");
 
         File pictureDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
@@ -67,9 +74,12 @@ public class Options extends AppCompatActivity {
 
         try{
             DeleteRecursive(mediaDir);
-        }catch (Exception e){}
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
 
-        try{
+        }
+
+/*        try{
             DeleteRecursive(pictureDir);
         }catch (Exception e){}
 
@@ -83,7 +93,7 @@ public class Options extends AppCompatActivity {
 
         try{
             DeleteRecursive(cacheDir);
-        }catch (Exception e){}
+        }catch (Exception e){}*/
     }
 
     @Override
@@ -91,6 +101,8 @@ public class Options extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
+        ActivityCompat.requestPermissions(MainActivity.this,
+                new String[]{"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"},ActivityCompat.THIS_REQUEST_CODE);
 
         formatBtn = (Button)findViewById(R.id.deletePhotobtn);
 //        takePhoto = (Button)findViewById(R.id.takePhotobtn);

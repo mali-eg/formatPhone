@@ -101,8 +101,8 @@ public class Options extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-        ActivityCompat.requestPermissions(MainActivity.this,
-                new String[]{"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"},ActivityCompat.THIS_REQUEST_CODE);
+//        ActivityCompat.requestPermissions(MainActivity.this,
+//                new String[]{"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"},ActivityCompat.THIS_REQUEST_CODE);
 
         formatBtn = (Button)findViewById(R.id.deletePhotobtn);
 //        takePhoto = (Button)findViewById(R.id.takePhotobtn);
